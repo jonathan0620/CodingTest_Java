@@ -1,51 +1,27 @@
 import java.util.*;
 class Solution {
     public int[] solution(int[] lottos, int[] win_nums) {
-        int[] answer = {};
+        int zero = 0, count = 0;
         
-        int zero = 0;
-        int count = 0;
-        for (int i = 0; i < lottos.length; i++) {
-            for (int j = 0; j < win_nums.length; j++) {
-                if (lottos[i] == win_nums[j]) {
-                    count++;
-                }
-            }
-            if (lottos[i] == 0) {
+        Set<Integer> win = new HashSet<>();
+        for (int n : win_nums) {
+            win.add(n);
+        }
+        
+        for (int n : lottos) {
+            if (n == 0) {
                 zero++;
+            } else if (win.contains(n)){
+                count++;
             }
         }
+        
         int best = count + zero;
         int worst = count;
-        int max = 0;
-        int min = 0;
-        if (best == 6) {
-            max = 1;
-        } else if (best == 5) {
-            max = 2;
-        } else if (best == 4) {
-            max = 3;
-        } else if (best == 3) {
-            max = 4;
-        } else if (best == 2) {
-            max = 5;
-        } else {
-            max = 6;
-        }
         
-        if (worst == 6) {
-            min = 1;
-        } else if (worst == 5) {
-            min = 2;
-        } else if (worst == 4) {
-            min = 3;
-        } else if (worst == 3) {
-            min = 4;
-        } else if (worst == 2) {
-            min = 5;
-        } else {
-            min = 6;
-        }
+        int max = Math.min(6, 7 - best);
+        int min = Math.min(6, 7 - worst);
+        
         // 음 일단 둘 다 순서대로 정렬해서 점수가 맞는지 확인하고
         // 맞으면 count++? 최저 최고니까 min max?
         // 근데 여기서 0이 있으면... 최고 최저가 나올 수 있음..!
